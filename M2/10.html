@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voting System</title>
+</head>
+<body>
+    <h2>Voting System</h2>
+    <div>
+        <label for="numCandidates">Enter number of candidates: </label>
+        <input type="number" id="numCandidates" min="1">
+        <button onclick="setCandidates()">Set Candidates</button>
+    </div>
+    <div id="candidatesDiv" style="display:none;">
+        <h3>Enter Candidates</h3>
+        <form id="candidatesForm">
+            <!-- Candidate names will be added here -->
+        </form>
+        <button onclick="setVoters()">Set Voters</button>
+    </div>
+    <div id="votingDiv" style="display:none;">
+        <h3>Voting</h3>
+        <p id="votingPrompt">Who do you vote for?</p>
+        <input type="text" id="voteInput">
+        <button onclick="submitVote()">Vote</button>
+    </div>
+    <script src="10.js"></script>
+</body>
+</html>

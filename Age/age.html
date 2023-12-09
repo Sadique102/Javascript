@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator</title>
+    <style>
+        body {
+            background-image: url("bbb.jpg");
+            background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 1px;
+        }
+        #clock{
+            text-align: right;
+        }
+		h3{
+			background-color: #35414D;
+			color: white;
+			padding: 8px;
+
+		}
+        h2{
+
+			color: black;
+			padding: 8px;
+
+		}
+        h1{
+            font-family: "Edwardian Script ITC";
+        }
+
+
+        .timerBtn{
+    width: 80px;
+    height: 30px;
+    border: 3px solid;
+    border-radius: 12px;
+    background-color: #333333;
+    color: white;
+    cursor: pointer;
+    font-family: consolas, monospace;
+}
+#timeDisplay{
+    font-size: 75px;
+    color: #40c437;
+    font-family: consolas, monospace;
+}
+#timeContainer{
+    text-align: center;
+    border: 3px solid;
+    border-radius: 25px;
+    background-color: #222222;
+}
+        @media only screen and (max-width: 70em) {
+  body {
+    background-image: url("b.jpg");
+      background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  }
+}
+
+@media only screen and (max-width: 55em) {
+  body {
+    background-image: url("b.jpg");
+      background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  }
+}
+
+@media only screen and (max-width: 40em) {
+  body {
+   background-image: url("b.jpg");
+      background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  }
+}
+
+
+    </style>
+</head>
+<body>
+<div id="clock-container">
+        <div id="clock">00:00:00</div>
+    </div>
+
+<h1>Age Calculator</h1>
+    <form id="ageForm">
+        <label for="birthYear">Birth Year: </label>
+
+        <input type="number" id="birthYear" required placeholder="Enter your birth year"><br>
+
+        <label for="birthMonth">Birth Month:</label>
+
+        <input type="number" id="birthMonth" required placeholder="Enter your birth month"><br>
+
+        <label for="birthDay">Birth Day: </label>
+
+        <input type="number" id="birthDay" required placeholder="Enter your date of birth"><br>
+
+        <button type="button" onclick="calculateAge()">Calculate Age</button>
+    </form><br>
+
+
+
+    <div id="result"></div>
+
+
+<h3>Leap Years in Interval</h3>
+    <p>Enter the start and end years to find leap years in the interval:</p>
+    <label for="startYear">Start Year:</label>
+    <input type="text" id="startYear" placeholder="Enter start year">
+    <br>
+    <label for="endYear">End Year:</label>
+    <input type="text" id="endYear" placeholder="Enter end year">
+    <br>
+    <button onclick="findLeapYears()">Find Leap Years</button>
+    <ul id="leapYearsList"></ul> <br>
+      <h3>Temperature conversion:</h3>
+<form>
+        <input type="number" id="textBox" value="0"><br>
+
+        <input type="radio" id="toFahrenheit" name="unit">
+        <label for="toFahrenheit">Celsius ➡ Fahrenheit</label><br>
+
+        <input type="radio" id="toCelsius" name="unit">
+        <label for="toCelsius">Fahrenheit ➡ Celsius</label><br>
+
+        <button type="button" onclick="convert()">submit</button>
+        <p id="dresult"></p>
+    </form>
+<h2>Stopwatch</h2>
+<div id="timeContainer">
+        <div id="timeDisplay">00:00:00</div>
+        <button id="startBtn" class="timerBtn">Start</button>
+        <button id="pauseBtn" class="timerBtn">Pause</button>
+        <button id="resetBtn" class="timerBtn">Reset</button>
+    </div>
+
+
+
+    <script>
+        function calculateAge() {
+            var birthYear = document.getElementById('birthYear').value;
+            var birthMonth = document.getElementById('birthMonth').value;
+            var birthDay = document.getElementById('birthDay').value;
+
+            var currentDate = new Date();
+            var currentYear = currentDate.getFullYear();
+            var currentMonth = currentDate.getMonth() + 1; // Months are zero-based
+            var currentDay = currentDate.getDate();
+
+            var age = currentYear - birthYear;
+
+            // Adjust age if birthday hasn't occurred yet this year
+            if (currentMonth < birthMonth || (currentMonth === birthMonth && currentDay < birthDay)) {
+                age--;
+            }
+
+            var ageWithMonthAndDay = age + " years, " + (currentMonth - birthMonth) + " months, and " + (currentDay - birthDay) + " days.";
+
+
+            document.getElementById('result').innerText = "Your age is " + ageWithMonthAndDay;
+        }
+
+
+        function findLeapYears() {
+            // Get the start and end years from the user
+            var startYear = parseInt(document.getElementById("startYear").value);
+            var endYear = parseInt(document.getElementById("endYear").value);
+
+            // Validate input
+            if (isNaN(startYear) || isNaN(endYear) || startYear > endYear) {
+                alert("Please enter valid start and end years.");
+                return;
+            }
+
+            // Find leap years in the interval
+            var leapYears = [];
+            for (var year = startYear; year <= endYear; year++) {
+                if ((year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)) {
+                    leapYears.push(year);
+                }
+            }
+
+            // Display the leap years in an unordered list on the HTML document
+            var leapYearsList = document.getElementById("leapYearsList");
+            leapYearsList.innerHTML = ""; // Clear previous results
+
+            for (var i = 0; i < leapYears.length; i++) {
+                var listItem = document.createElement("li");
+                listItem.appendChild(document.createTextNode(leapYears[i]));
+                leapYearsList.appendChild(listItem);
+            }
+        }
+
+
+        const timeDisplay = document.querySelector("#timeDisplay");
+const startBtn = document.querySelector("#startBtn");
+const pauseBtn = document.querySelector("#pauseBtn");
+const resetBtn = document.querySelector("#resetBtn");
+
+let startTime = 0;
+let elapsedTime = 0;
+let currentTime = 0;
+let paused = true;
+let intervalId;
+let hrs = 0;
+let mins = 0;
+let secs = 0;
+
+startBtn.addEventListener("click", () => {
+    if(paused){
+        paused = false;
+        startTime = Date.now() - elapsedTime;
+        intervalId = setInterval(updateTime, 1000);
+    }
+});
+pauseBtn.addEventListener("click", () => {
+    if(!paused){
+        paused = true;
+        elapsedTime = Date.now() - startTime;
+        clearInterval(intervalId);
+    }
+});
+resetBtn.addEventListener("click", () => {
+    paused = true;
+    clearInterval(intervalId);
+    startTime = 0;
+    elapsedTime = 0;
+    currentTime = 0;
+    hrs = 0;
+    mins = 0;
+    secs = 0;
+    timeDisplay.textContent = "00:00:00";
+});
+
+function updateTime(){
+    elapsedTime = Date.now() - startTime;
+
+    secs = Math.floor((elapsedTime / 1000) % 60);
+    mins = Math.floor((elapsedTime / (1000 * 60)) % 60);
+    hrs = Math.floor((elapsedTime / (1000 * 60 * 60)) % 60);
+
+    secs = pad(secs);
+    mins = pad(mins);
+    hrs = pad(hrs);
+
+    timeDisplay.textContent = `${hrs}:${mins}:${secs}`;
+
+    function pad(unit){
+        return (("0") + unit).length > 2 ? unit : "0" + unit;
+    }
+}
+
+const textBox = document.getElementById("textBox");
+const toFahrenheit = document.getElementById("toFahrenheit");
+const toCelsius = document.getElementById("toCelsius");
+const result = document.getElementById("dresult");
+let temp;
+
+function convert(){
+
+    if(toFahrenheit.checked){
+        temp = Number(textBox.value);
+        temp = temp * 9 / 5 + 32;
+        result.textContent = temp.toFixed(1) + "°F";
+    }
+    else if(toCelsius.checked){
+        temp = Number(textBox.value);
+        temp = (temp - 32) * (5/9);
+        result.textContent = temp.toFixed(1) + "°C";
+    }
+    else{
+        result.textContent = "Select a unit";
+    }
+}
+
+function updateClock(){
+
+    const now = new Date();
+    let hours = now.getHours();
+    const meridiem = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12;
+    hours = hours.toString().padStart(2, 0);
+    const minutes = now.getMinutes().toString().padStart(2, 0);
+    const seconds = now.getSeconds().toString().padStart(2, 0);
+    const timeString = `${hours}:${minutes}:${seconds} ${meridiem}`;
+    document.getElementById("clock").textContent = timeString;
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>

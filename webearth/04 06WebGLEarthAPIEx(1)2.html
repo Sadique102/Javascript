@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html lang ="en">
+  <head>
+      <meta charset="utf-8" />
+    <script src="http://www.webglearth.com/v2/api.js"></script>
+    <style>
+		html, body {
+		  padding: 0;
+		  margin: 0;
+		}
+		#earth_div{
+		  top: 0;
+		  right: 0;
+		  bottom: 0;
+		  left: 0; 
+		  background-color: #000000;
+		  position: absolute !important;
+		}
+
+		#buttons {
+			position: absolute !important;
+			top:10px;
+			left: 10px;
+		}
+      </style>
+      <title>Earth</title>
+    </head>
+    <body onload="initialize()">
+      
+      <div id="earth_div"></div>
+      <div id="buttons">
+        <!-- Add two buttons: GO HOME and SHOW COORDINATES -->
+      </div>
+    <script>
+      var earth;
+
+function initialize() {
+    var options = {
+        atmosphere: true,
+        center: [0, 0],
+        zoom: 0
+    };
+    earth = new WE.map('earth_div', options);
+
+    WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(earth);
+
+}
+
+function goHome() {
+   // todo
+   alert(earth.getCenter());
+}
+
+function showCoords() {
+   // todo
+   earth.setView([41.893292620836945,12.483070431973514]);
+   earth.setZoom(13);
+
+}
+    </script>
+  </body>
+</html>
